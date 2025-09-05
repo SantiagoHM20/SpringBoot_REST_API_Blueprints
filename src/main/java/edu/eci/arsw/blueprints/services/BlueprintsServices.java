@@ -8,6 +8,7 @@ package edu.eci.arsw.blueprints.services;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,13 +33,27 @@ public class BlueprintsServices {
 
     
     public void addNewBlueprint(Blueprint bp){
-        bpp.save(bp);
+        try{
+            bpp.saveBlueprint(bp);
+        }
+        catch (BlueprintPersistenceException e){
+            System.out.println("Unable to save that Blueprint"+ e.getMessage());
+        }
         
     }
     
     public Set<Blueprint> getAllBlueprints(){
-        return bpp.getAllBlueprints() ;
+        try {
+            return bpp.getAllBlueprints();
+        }
+        catch (BlueprintPersistenceException e){
+            System.out.println("Any Blueprints found "+ e.getMessage());
+            return null;
+        }
+
     }
+
+
     
     /**
      * 
@@ -47,11 +62,12 @@ public class BlueprintsServices {
      * @return the blueprint of the given name created by the given author
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
-    public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        try{return bpp.getBlueprint(author, name); 
-        }
-        catch(BlueprintNotFoundException e){
-            e.BlueprintNotFound;
+    public Blueprint getBlueprint(String author, String name) {
+        try {
+            return bpp.getBlueprint(author, name);
+        } catch (BlueprintNotFoundException e) {
+            System.out.println("Blueprint not found: " + e.getMessage());
+            return null;
         }
     }
     
@@ -63,10 +79,11 @@ public class BlueprintsServices {
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
         try{
-        bpp.getBlueprintsByAuthor(author);
+        return bpp.getBlueprintsByAuthor(author);
         }
-        catch(BlueprintNotFoundException){
-            e.BlueprintNotFound;
+        catch(BlueprintNotFoundException e){
+            System.out.println("Blueprint not found: " + e.getMessage());
+            return null;
         }
     }
     
