@@ -21,16 +21,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BlueprintsServices {
+
+    private final BlueprintsPersistence bpp;
    
     @Autowired
-    BlueprintsPersistence bpp=null;
+    Public BlueprintsServices(BlueprintsPersistence bpp){
+        this.bpp = bpp;
+    }
+
+
     
     public void addNewBlueprint(Blueprint bp){
+        bpp.save(bp);
         
     }
     
     public Set<Blueprint> getAllBlueprints(){
-        return null;
+        return bpp.getAllBlueprints() ;
     }
     
     /**
@@ -41,7 +48,8 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
+        return bpp.findByName(name); 
     }
     
     /**
@@ -52,6 +60,7 @@ public class BlueprintsServices {
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
         throw new UnsupportedOperationException("Not supported yet."); 
+        bpp.findByAuthor(author);
     }
     
 }
