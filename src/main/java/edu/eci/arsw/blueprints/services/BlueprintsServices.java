@@ -25,7 +25,7 @@ public class BlueprintsServices {
     private final BlueprintsPersistence bpp;
    
     @Autowired
-    Public BlueprintsServices(BlueprintsPersistence bpp){
+    public BlueprintsServices(BlueprintsPersistence bpp){
         this.bpp = bpp;
     }
 
@@ -48,8 +48,11 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        throw new UnsupportedOperationException("Not supported yet.");
-        return bpp.findByName(name); 
+        try{return bpp.getBlueprint(author, name); 
+        }
+        catch(BlueprintNotFoundException e){
+            e.BlueprintNotFound;
+        }
     }
     
     /**
@@ -59,8 +62,12 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if the given author doesn't exist
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
-        throw new UnsupportedOperationException("Not supported yet."); 
-        bpp.findByAuthor(author);
+        try{
+        bpp.getBlueprintsByAuthor(author);
+        }
+        catch(BlueprintNotFoundException){
+            e.BlueprintNotFound;
+        }
     }
     
 }
