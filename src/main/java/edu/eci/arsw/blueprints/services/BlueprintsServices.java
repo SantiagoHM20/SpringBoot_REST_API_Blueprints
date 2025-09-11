@@ -53,8 +53,6 @@ public class BlueprintsServices {
 
     }
 
-
-    
     /**
      * 
      * @param author blueprint's author

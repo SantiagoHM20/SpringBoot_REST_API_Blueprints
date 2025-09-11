@@ -13,8 +13,10 @@ import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -49,13 +51,19 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     }
 
     @Override
-    public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
-        return null;
+    public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException {
+        Set<Blueprint> result = blueprints.values().stream()
+                .filter(bp -> bp.getAuthor().equals(author))
+                .collect(Collectors.toSet());
+        if (result.isEmpty()) {
+            throw new BlueprintNotFoundException("No blueprints found for author: " + author);
+        }
+        return result;
     }
 
     @Override
-    public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException{
-        return null;
+    public Set<Blueprint> getAllBlueprints() throws BlueprintPersistenceException {
+        return new HashSet<>(blueprints.values());
     }
 
 

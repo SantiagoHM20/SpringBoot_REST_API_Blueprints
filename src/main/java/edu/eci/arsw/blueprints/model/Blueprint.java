@@ -1,12 +1,14 @@
 
 package edu.eci.arsw.blueprints.model;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-
+@Data
 public class Blueprint {
 
     private String author=null;
